@@ -1,0 +1,19 @@
+{
+  "name": "rsocial-server",
+  "version": "1.0.0",
+  "description": "proyecto Red Social",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guialexander/Red-Social-server.git"
+  },
+  "author": "Guillermo Alexander Herrera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/guialexander/Red-Social-server/issues"
+  },
+  "homepage": "https://github.com/guialexander/Red-Social-server#readme"
+}
