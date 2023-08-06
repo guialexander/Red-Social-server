@@ -33,8 +33,23 @@ async function getByIdHandler(req, res, next) {
 
 async function createHandler(req, res, next) {
   try {
-    const user = await create(req.body);
-    return res.status(201).json(user);
+    let params =req.body;
+    if(!params.name || !params.email || !params.password || !params.nick){
+        return res.status(400).json({
+          status: 'Error',
+          message:'missing data',
+          params
+        })
+
+      }
+      console.log("create")
+      const user = await create(params);
+      return res.status(201).json({
+        status: 'Succes',
+        message: 'user registration action',
+        user
+      });
+
   } catch (error) {
     return next(error);
   }
