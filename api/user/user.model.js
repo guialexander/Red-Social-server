@@ -6,11 +6,32 @@ const UserSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+
+  lastName:{
+    type: String,
+    required:true,
+    trim: true,
+  },
+  nick:{
+    type:String,
+    trim: true,
+  },
+
+
   email: {
     type: String,
     required: true,
     unique: [true, 'Email must be unique'],
     trim: true,
+  },
+  role: {
+    type: String,
+    enum: ['ADMIN', 'role_user'],
+    default: 'role_user',
+  },
+  avatar :{
+    type: String,
+    default: 'defaul.png',
   },
   password: String,
   age: {
@@ -18,18 +39,15 @@ const UserSchema = new mongoose.Schema({
     min: 18,
     max: 65,
   },
-  role: {
-    type: String,
-    enum: ['ADMIN', 'USER'],
-    default: 'USER',
-  },
+
   isActive: {
     type: Boolean,
     default: false,
   }
-}, {
+},
+{
   versionKey: false,
-  timestamps: true,
+  timestamps: true,  //La opción timestamps: true en la definición del esquema de Mongoose habilita la creación automática de los campos "createdAt" y "updatedAt" en los documentos.
 });
 
 // trigger
