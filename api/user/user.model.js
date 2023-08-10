@@ -43,12 +43,28 @@ const UserSchema = new mongoose.Schema({
   isActive: {
     type: Boolean,
     default: false,
+  },
+  passwordResetExpires:{
+  type: Date
   }
 },
 {
   versionKey: false,
   timestamps: true,  //La opción timestamps: true en la definición del esquema de Mongoose habilita la creación automática de los campos "createdAt" y "updatedAt" en los documentos.
 });
+// Virtuals
+UserSchema.virtual('profile').get(function () {
+  const user = this;
+
+  return {
+    name:   user.name,
+    email:  user.email,
+    role:   user.role,
+    nick:   user.nick,
+    avatar: user.avatar
+  }
+});
+
 
 // trigger
 // UserSchema.pre('save', function (next) {
@@ -71,16 +87,7 @@ const UserSchema = new mongoose.Schema({
 
 // });
 
-// Virtuals
-UserSchema.virtual('profile').get(function () {
-  const user = this;
 
-  return {
-    name: user.name,
-    email: user.email,
-    role: user.role,
-  }
-});
 
 // Methods
 // UserSchema.methods.comparePaassword = function () {}

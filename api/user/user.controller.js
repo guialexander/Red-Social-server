@@ -4,13 +4,20 @@ const {
   getById,
   remove,
   update,
+  getAllList,
 } = require('./user.service')
+
+
 
 
 async function getAllHandler(req, res, next) {
   try {
     const users = await getAll();
-    return res.json(users);
+    return res.status(200).json({
+      status:'success',
+      message: 'list Users',
+      users
+     });
   } catch (error) {
     return next(error);
   }
@@ -24,7 +31,7 @@ async function getByIdHandler(req, res, next) {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-
+     //profile lo ajustamos en el modelo que quiere traer en la virtual
     return res.json(user.profile);
   } catch (error) {
     return next(error);
@@ -85,6 +92,46 @@ async function removeHandler(req, res, next) {
     next(error);
   }
 }
+async function profileHandler(req, res, next) {
+  try {
+    const { id } = req.params;
+    const user = await getById(id);
+    console.log(user);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.json(user.profile);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function listHandler(req, res, next) {
+  try {
+    //controlar en que pagina estamos
+
+    let page = req.params.page || 1;
+
+    page = parseInt(page)
+    //consultar con mongoose paginate
+    let itemsPerPage=2;
+    const list = await getAllList(page,itemsPerPage);
+
+
+    //Devolver resulatdo (info follow)
+
+    return res.status(200).json({
+      status:'success',
+      message: 'list Users',
+      list
+    });
+  } catch (error) {
+    return next(error);
+  }
+}
+
 
 module.exports = {
   getAllHandler,
@@ -92,4 +139,6 @@ module.exports = {
   createHandler,
   updateHandler,
   removeHandler,
+  profileHandler,
+  listHandler
 }
