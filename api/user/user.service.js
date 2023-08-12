@@ -6,19 +6,24 @@ function getAll() {
   return User.find();
 }
 
-function getAllList(page,itemsPerPage) {
-   User.paginate({},page,itemsPerPage,(error, users, total)=>{
+async function getAllList(page,itemsPerPage) {
 
-    return {
-      users,
-      page,
-      itemsPerPage,
-      total,
-      pages:false
-    }
+  try {
+    const result = await User.paginate({}, { page, limit: itemsPerPage });
+
+    const users = result.docs; // Usuarios de la página actual
+    const pageInfo = {
+      page: result.page, // pagina del api
+      itemsPerPage: result.limit,
+      total: result.total,
+      pages: result.pages // paginas que hay
+    };
 
 
-  });
+  return ({users, pageInfo})
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 function getById(id) {
