@@ -8,6 +8,15 @@ const {
 } = require('./user.service')
 
 
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: 'dngv1ognd',
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRECT
+});
+
+
 
 
 async function getAllHandler(req, res, next) {
@@ -118,8 +127,6 @@ async function listHandler(req, res, next) {
     //consultar con mongoose paginate
     let itemsPerPage=2;
     const list = await getAllList(page,itemsPerPage);
-
-
     //Devolver resulatdo (info follow)
 
     return res.status(200).json({

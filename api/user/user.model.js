@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -12,6 +13,7 @@ const UserSchema = new mongoose.Schema({
     required:true,
     trim: true,
   },
+  bio:String,
   nick:{
     type:String,
     trim: true,
@@ -92,6 +94,7 @@ UserSchema.virtual('profile').get(function () {
 // Methods
 // UserSchema.methods.comparePaassword = function () {}
 
+UserSchema.plugin(mongoosePaginate);
 
 const User = mongoose.model('User', UserSchema); // users
 
